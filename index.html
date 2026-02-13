@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            background: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .rock { background: #ff6b6b; }
+        .paper { background: #4dabf7; }
+        .scissor { background: #51cf66; }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        #result {
+            margin-top: 30px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🪨 Rock 📄 Paper ✂ Scissors</h1>
+
+    <button class="rock" onclick="play('rock')">Rock</button>
+    <button class="paper" onclick="play('paper')">Paper</button>
+    <button class="scissor" onclick="play('scissor')">Scissor</button>
+
+    <div id="result"></div>
+
+    <script>
+        function play(userChoice) {
+            const choices = ["rock", "paper", "scissor"];
+            const compChoice = choices[Math.floor(Math.random() * 3)];
+
+            let resultText = `
+                You chose: <b>${userChoice}</b><br>
+                Computer chose: <b>${compChoice}</b><br><br>
+            `;
+
+            if (userChoice === compChoice) {
+                resultText += "🤝 Draw! Play again.";
+            } 
+            else if (
+                (userChoice === "rock" && compChoice === "scissor") ||
+                (userChoice === "paper" && compChoice === "rock") ||
+                (userChoice === "scissor" && compChoice === "paper")
+            ) {
+                resultText += "🎉 You Win!";
+            } 
+            else {
+                resultText += "💻 Computer Wins!";
+            }
+
+            document.getElementById("result").innerHTML = resultText;
+        }
+    </script>
+
+</body>
+</html>
