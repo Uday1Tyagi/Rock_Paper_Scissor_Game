@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Rock Paper Scissors - Animated</title>
+<title>Rock Paper Scissors - Pro</title>
 
 <style>
 * {
@@ -17,29 +17,34 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    background: linear-gradient(135deg, #141e30, #243b55);
     color: white;
 }
 
 .container {
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(15px);
     padding: 40px;
     border-radius: 20px;
     text-align: center;
-    width: 420px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.6);
-    animation: fadeIn 1s ease-in-out;
+    width: 400px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
 }
 
 h1 {
     margin-bottom: 20px;
+    font-size: 28px;
 }
 
 .score-board {
     display: flex;
     justify-content: space-between;
     margin-bottom: 25px;
+    font-size: 18px;
+}
+
+.buttons {
+    margin-top: 20px;
 }
 
 button {
@@ -51,10 +56,6 @@ button {
     cursor: pointer;
     transition: 0.3s;
     font-weight: bold;
-}
-
-button:active {
-    transform: scale(0.9);
 }
 
 .rock { background: #ff4d6d; }
@@ -70,42 +71,12 @@ button:hover {
     margin-top: 25px;
     font-size: 20px;
     min-height: 60px;
-    opacity: 0;
+    transition: 0.3s;
 }
 
-.show {
-    animation: fadeResult 0.5s forwards;
-}
-
-.win { color: #00ffae; animation: bounce 0.5s; }
-.lose { color: #ff6b6b; animation: shake 0.5s; }
+.win { color: #00ffae; }
+.lose { color: #ff6b6b; }
 .draw { color: #ffd43b; }
-
-/* Animations */
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px);}
-    to { opacity: 1; transform: translateY(0);}
-}
-
-@keyframes fadeResult {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
-}
-
-@keyframes bounce {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
 
 </style>
 </head>
@@ -120,9 +91,11 @@ button:hover {
         <div>💻 Computer: <span id="compScore">0</span></div>
     </div>
 
-    <button class="rock" onclick="play('rock')">Rock</button>
-    <button class="paper" onclick="play('paper')">Paper</button>
-    <button class="scissor" onclick="play('scissor')">Scissor</button>
+    <div class="buttons">
+        <button class="rock" onclick="play('rock')">Rock</button>
+        <button class="paper" onclick="play('paper')">Paper</button>
+        <button class="scissor" onclick="play('scissor')">Scissor</button>
+    </div>
 
     <div id="result"></div>
 </div>
@@ -139,34 +112,29 @@ function play(userChoice) {
 
     let resultDiv = document.getElementById("result");
     resultDiv.className = "";
-    resultDiv.style.opacity = "0";
 
-    setTimeout(() => {
-        if (userChoice === compChoice) {
-            resultDiv.innerHTML = "🤝 Draw!";
-            resultDiv.classList.add("draw");
-        } 
-        else if (
-            (userChoice === "rock" && compChoice === "scissor") ||
-            (userChoice === "paper" && compChoice === "rock") ||
-            (userChoice === "scissor" && compChoice === "paper")
-        ) {
-            userScore++;
-            document.getElementById("userScore").innerText = userScore;
-            resultDiv.innerHTML = "🎉 You Win!";
-            resultDiv.classList.add("win");
-        } 
-        else {
-            compScore++;
-            document.getElementById("compScore").innerText = compScore;
-            resultDiv.innerHTML = "💻 Computer Wins!";
-            resultDiv.classList.add("lose");
-        }
+    if (userChoice === compChoice) {
+        resultDiv.innerHTML = "🤝 Draw!";
+        resultDiv.classList.add("draw");
+    } 
+    else if (
+        (userChoice === "rock" && compChoice === "scissor") ||
+        (userChoice === "paper" && compChoice === "rock") ||
+        (userChoice === "scissor" && compChoice === "paper")
+    ) {
+        userScore++;
+        document.getElementById("userScore").innerText = userScore;
+        resultDiv.innerHTML = "🎉 You Win!";
+        resultDiv.classList.add("win");
+    } 
+    else {
+        compScore++;
+        document.getElementById("compScore").innerText = compScore;
+        resultDiv.innerHTML = "💻 Computer Wins!";
+        resultDiv.classList.add("lose");
+    }
 
-        resultDiv.innerHTML += `<br><small>You: ${userChoice} | Computer: ${compChoice}</small>`;
-        resultDiv.classList.add("show");
-
-    }, 200);
+    resultDiv.innerHTML += `<br><small>You: ${userChoice} | Computer: ${compChoice}</small>`;
 }
 
 </script>
