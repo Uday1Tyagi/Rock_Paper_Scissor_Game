@@ -1,143 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Rock Paper Scissors - Pro</title>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            background: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
-}
+        h1 {
+            margin-bottom: 30px;
+        }
 
-body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #141e30, #243b55);
-    color: white;
-}
+        button {
+            font-size: 20px;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
 
-.container {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    width: 400px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-}
+        .rock { background: #ff6b6b; }
+        .paper { background: #4dabf7; }
+        .scissor { background: #51cf66; }
 
-h1 {
-    margin-bottom: 20px;
-    font-size: 28px;
-}
+        button:hover {
+            opacity: 0.8;
+        }
 
-.score-board {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 25px;
-    font-size: 18px;
-}
-
-.buttons {
-    margin-top: 20px;
-}
-
-button {
-    font-size: 18px;
-    padding: 12px 25px;
-    margin: 10px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: bold;
-}
-
-.rock { background: #ff4d6d; }
-.paper { background: #4dabf7; }
-.scissor { background: #51cf66; }
-
-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 20px white;
-}
-
-#result {
-    margin-top: 25px;
-    font-size: 20px;
-    min-height: 60px;
-    transition: 0.3s;
-}
-
-.win { color: #00ffae; }
-.lose { color: #ff6b6b; }
-.draw { color: #ffd43b; }
-
-</style>
+        #result {
+            margin-top: 30px;
+            font-size: 22px;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
     <h1>🪨 Rock 📄 Paper ✂ Scissors</h1>
 
-    <div class="score-board">
-        <div>👤 You: <span id="userScore">0</span></div>
-        <div>💻 Computer: <span id="compScore">0</span></div>
-    </div>
-
-    <div class="buttons">
-        <button class="rock" onclick="play('rock')">Rock</button>
-        <button class="paper" onclick="play('paper')">Paper</button>
-        <button class="scissor" onclick="play('scissor')">Scissor</button>
-    </div>
+    <button class="rock" onclick="play('rock')">Rock</button>
+    <button class="paper" onclick="play('paper')">Paper</button>
+    <button class="scissor" onclick="play('scissor')">Scissor</button>
 
     <div id="result"></div>
-</div>
 
-<script>
+    <script>
+        function play(userChoice) {
+            const choices = ["rock", "paper", "scissor"];
+            const compChoice = choices[Math.floor(Math.random() * 3)];
 
-let userScore = 0;
-let compScore = 0;
+            let resultText = `
+                You chose: <b>${userChoice}</b><br>
+                Computer chose: <b>${compChoice}</b><br><br>
+            `;
 
-function play(userChoice) {
+            if (userChoice === compChoice) {
+                resultText += "🤝 Draw! Play again.";
+            } 
+            else if (
+                (userChoice === "rock" && compChoice === "scissor") ||
+                (userChoice === "paper" && compChoice === "rock") ||
+                (userChoice === "scissor" && compChoice === "paper")
+            ) {
+                resultText += "🎉 You Win!";
+            } 
+            else {
+                resultText += "💻 Computer Wins!";
+            }
 
-    const choices = ["rock", "paper", "scissor"];
-    const compChoice = choices[Math.floor(Math.random() * 3)];
-
-    let resultDiv = document.getElementById("result");
-    resultDiv.className = "";
-
-    if (userChoice === compChoice) {
-        resultDiv.innerHTML = "🤝 Draw!";
-        resultDiv.classList.add("draw");
-    } 
-    else if (
-        (userChoice === "rock" && compChoice === "scissor") ||
-        (userChoice === "paper" && compChoice === "rock") ||
-        (userChoice === "scissor" && compChoice === "paper")
-    ) {
-        userScore++;
-        document.getElementById("userScore").innerText = userScore;
-        resultDiv.innerHTML = "🎉 You Win!";
-        resultDiv.classList.add("win");
-    } 
-    else {
-        compScore++;
-        document.getElementById("compScore").innerText = compScore;
-        resultDiv.innerHTML = "💻 Computer Wins!";
-        resultDiv.classList.add("lose");
-    }
-
-    resultDiv.innerHTML += `<br><small>You: ${userChoice} | Computer: ${compChoice}</small>`;
-}
-
-</script>
+            document.getElementById("result").innerHTML = resultText;
+        }
+    </script>
 
 </body>
-</html>
+</html>  
